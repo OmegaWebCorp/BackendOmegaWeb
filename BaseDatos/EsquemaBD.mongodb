@@ -1,0 +1,324 @@
+// MongoDB Playground
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+const database = 'MinTic4';
+const collection = 'Usuarios';
+
+// Create a new database.
+use(database);
+// Drop users collection
+db.getCollection(collection).drop();
+
+// Create a new collection.
+db.createCollection(collection, {
+  validator: {
+    $jsonSchema: {
+      required: ['nombre', 'apellido', 'correo', 'identificacion', 'rol', 'estado'],
+      properties: {
+        correo: {
+          bsonType: 'string',
+          pattern: '^[a-z0-9+_.-]+@[a-z0-9.-]+$'
+        },
+        identificacion: {
+          bsonType: 'string',
+        },
+        nombre: {
+          bsonType: 'string'
+        },
+        apellido: {
+          bsonType: 'string'
+        },
+        rol: {
+          enum: ["administrador", "lider", "estudiante"]
+        },
+        estado: {
+          enum: ["pendiente", "autorizado", "no autorizado"]
+        },
+        password: {
+          bsonType: 'string'
+        }
+      }
+    }
+  }
+});
+
+//Registros de Usuarios
+//const database = 'MinTic4';
+//const collection = 'Usuarios';
+
+// Create a new database.
+use(database);
+const users = [
+  {
+    "correo": "tomas.anderson@mail.com",
+    "identificacion":"13236545",
+    "nombre": "Tomas",
+    "apellido": "Alba",  
+    "rol": "lider",
+    "estado": "no autorizado",
+    "password": "rwKeiWDba6tdKvDfEBjyePJnDT7K"
+  }, 
+  {
+    "correo": "angie.sanchez@mail.com",
+    "identificacion":"14785236",
+    "nombre": "angie",
+    "apellido": "sanchez",  
+    "rol": "administrador",
+    "estado": "autorizado",
+    "password": "rwKeiWDba6tdKvDfEBjyePJnDT7K"
+  }, 
+   {
+    "correo": "armstrong@omegaweb.com",
+    "identificacion":"16071969",
+    "nombre": "Neil",
+    "apellido": "Armstrong",  
+    "rol": "lider",
+    "estado": "pendiente",
+    "password": "astronauta1"
+  },
+    {
+    "correo": "tereshkova@omegaweb.com",
+    "identificacion":"16071963",
+    "nombre": "Valentina",
+    "apellido": "Tereshkova",  
+    "rol": "lider",
+    "estado": "autorizado",
+    "password": "astronauta2"
+  },
+    {
+    "correo": "ochoa@omegaweb.com",
+    "identificacion":"56661994",
+    "nombre": "Ellen",
+    "apellido": "Ochoa",  
+    "rol": "estudiante",
+    "estado": "autorizado",
+    "password": "astronauta4"
+  },
+      {
+    "correo": "aldrin@omegaweb.com",
+    "identificacion":"160719692",
+    "nombre": "Edwin",
+    "apellido": "Aldrin",  
+    "rol": "estudiante",
+    "estado": "autorizado",
+    "password": "astronauta5"
+  },
+];
+
+// Insert users
+db.getCollection(collection).insertMany(users);
+
+
+//
+const collectionpry = 'Proyectos';
+
+// Create a new database.
+use(database);
+// Drop users collection
+db.getCollection(collectionpry).drop();
+
+// Create a new collection.
+db.createCollection(collectionpry, {
+  validator: {
+    $jsonSchema: {
+      required: ['nombre', 'objetivogeneral','objetivoespecificos',  'presupuesto', 'fechainicio', 'fechafin', 'lider', 'estado', 'fase'],
+      properties: {
+      
+        nombre: {
+          bsonType: 'string',
+        },
+        objetivogeneral: {
+          bsonType: 'string'
+        },
+        objetivoespecificos:{
+          bsonType: 'array'
+        },
+        presupuesto: {
+          bsonType: 'decimal'
+        },
+        fechainicio:{
+          bsonType: 'date'
+        },
+        fechafin:{
+          bsonType: 'date'
+        },
+        lider:{
+          bsonType: 'objectId'
+        },
+
+        fase: {
+          enum: ["iniciado", "desarrollo", "terminado"]
+        },
+        estado: {
+          enum: ["activo", "inactivo"]
+        }
+        
+        
+      }
+    }
+  }
+});
+
+use(database);
+//se crea una array para insertar en la colección proyectos.
+const proyectos=[
+    {
+    "nombre": "Project 1",
+    "objetivogeneral":"Evaluar el uso de diversos carbonatos en la producción de materiales compuestos y su efecto en la dureza final del producto.",
+    "objetivoespecificos": ["Proponer métodos de producción de zeolitas beta a escala laboratorio.","Mejorar la eficiencia de las zeolitas beta en la descomposición de alcoholes y solventes orgánicos."],
+    "presupuesto": Decimal128('47028000'),
+    "fechainicio": new Date(),
+    "fechafin": new Date(new Date().getTime() + 60*24*60*60000),
+    "lider": db.Usuarios.findOne({correo: 'tereshkova@omegaweb.com'})._id,
+    "fase": "iniciado",
+    "estado": "inactivo"    
+  }, 
+    {
+    "nombre": "Project 2",
+    "objetivogeneral":"Comprender la factibilidad de producción de resinas tipo epóxicas y poliéster a escala planta piloto cambiando el método de producción entre batch y continuo",
+    "objetivoespecificos": ["Realizar un análisis bibliográfico sobre la síntesis de diversos tipos de resinas a escala laboratorio", "Evaluar la producción de resinas a escala planta piloto usando simulación de procesos (AspenPlus)."],
+    "presupuesto": Decimal128('47028000'),
+    "fechainicio": new Date(),
+    "fechafin": new Date(new Date().getTime() + 60*24*60*60000),
+    "lider": db.Usuarios.findOne({correo: 'tereshkova@omegaweb.com'})._id,
+    "fase": "iniciado",
+    "estado": "inactivo"    
+  },
+  {
+    "nombre": "Project 3",
+    "objetivogeneral":"Validar creación de proyecto",
+    "objetivoespecificos": ["crear", "actualizar"],
+    "presupuesto": Decimal128('40000000'),
+    "fechainicio": new Date(),
+    "fechafin": new Date(new Date().getTime() + 60*24*60*60000),
+    "lider": db.Usuarios.findOne({correo: 'tomas.anderson@mail.com'})._id,
+    "fase": "iniciado",
+    "estado": "inactivo"    
+  }
+  
+];
+//se ejecuta la funcion para insertar muchos proyectos
+db.getCollection(collectionpry).insertMany(proyectos);
+
+
+// enrollments collection
+
+collection_inscr = 'Inscripcion';
+
+// Drop enrollments collection
+db.getCollection(collection_inscr).drop();
+
+db.createCollection(collection_inscr, {
+  validator: {
+    $jsonSchema: {
+      required: ['project_id', 'user_id'],
+      properties: {
+        project_id: {
+          bsonType: 'objectId',
+        },
+        user_id: {
+          bsonType: 'objectId'
+        },
+        estado: {
+          enum: ['aceptado', 'rechazado']
+        },
+        fechaingreso: {
+          bsonType: 'date'
+        },
+        fechaegreso: {
+          bsonType: 'date'
+        }
+      }
+    }
+  }
+});
+
+// Create unique index for project_id and user_id
+db.getCollection(collection_inscr).createIndex({ project_id: 1, user_id: 1 }, { unique: true, name: '_project_user_' });
+
+const enrollments = [
+  {
+    "project_id": db.Proyectos.findOne({nombre: 'Project 1'}, {_id: 1})._id,
+    "user_id": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'}, {_id: 1})._id
+  },
+  {
+    "project_id": db.Proyectos.findOne({nombre: 'Project 1'}, {_id: 1})._id,
+    "user_id": db.Usuarios.findOne({correo: 'ochoa@omegaweb.com'})._id
+  },
+  {
+    "project_id": db.Proyectos.findOne({nombre: 'Project 2'}, {_id: 1})._id,
+    "user_id": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'})._id
+  }
+];
+
+// Insert enrollments
+db.getCollection(collection_inscr).insertMany(enrollments);
+
+
+
+
+// advances collection
+collection_avances = 'Avances'
+
+// Drop advances collection
+db.getCollection(collection_avances).drop();
+
+// Create advances collection
+db.createCollection(collection_avances, {
+  validator: {
+    $jsonSchema: {
+      required: ['project_id', 'fecha', 'description', 'observations'],
+      properties: {
+        project_id: {
+          bsonType: 'objectId',
+        },
+        fecha: {
+          bsonType: 'date'
+        },
+        description: {
+          bsonType: 'string'
+        },
+        observations: {
+          bsonType: 'string'
+        },
+        creadopor:{
+          bsonType:'objectId'
+        }
+      }
+    }
+  }
+});
+
+const avances = [
+  {
+    "project_id": db.Proyectos.findOne({nombre: 'Project 1'})._id,
+    "fecha": new Date(),
+    "description": 'Se realizó el estudio bibliográfico del tipo de carbonatos usados en materiales compuestos y se diseñaron diversos',
+    "observations": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "creadopor": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'})._id
+  },
+  {
+    "project_id": db.Proyectos.findOne({nombre: 'Project 2'})._id,
+    "fecha": new Date(),
+    "description": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nisl augue, ultrices non placerat maximus, feugiat nec mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent posuere eros libero, eu hendrerit leo maximus congue. Aliquam accumsan tortor quis suscipit imperdiet. Pellentesque blandit augue lacus, at sollicitudin orci luctus sit amet. Donec et ornare leo. Fusce sollicitudin eros a nisi ullamcorper, porttitor eleifend massa luctus. Morbi luctus tellus dui, et commodo justo euismod eget.',
+    "observations": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "creadopor": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'})._id
+  },
+  {
+    "project_id": db.Proyectos.findOne({nombre: 'Project 2'})._id,
+    "fecha": new Date(),
+    "description": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nisl augue, ultrices non placerat maximus, feugiat nec mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent posuere eros libero, eu hendrerit leo maximus congue. Aliquam accumsan tortor quis suscipit imperdiet. Pellentesque blandit augue lacus, at sollicitudin orci luctus sit amet. Donec et ornare leo. Fusce sollicitudin eros a nisi ullamcorper, porttitor eleifend massa luctus. Morbi luctus tellus dui, et commodo justo euismod eget.',
+    "observations": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "creadopor": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'})._id
+  },
+  {
+    "project_id": db.Proyectos.findOne({nombre: 'Project 1'})._id,
+    "fecha": new Date(),
+    "description": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nisl augue, ultrices non placerat maximus, feugiat nec mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent posuere eros libero, eu hendrerit leo maximus congue. Aliquam accumsan tortor quis suscipit imperdiet. Pellentesque blandit augue lacus, at sollicitudin orci luctus sit amet. Donec et ornare leo. Fusce sollicitudin eros a nisi ullamcorper, porttitor eleifend massa luctus. Morbi luctus tellus dui, et commodo justo euismod eget.',
+    "observations": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "creadopor": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'})._id
+  }
+];
+
+// Insert advances
+db.getCollection(collection_avances).insertMany(avances);

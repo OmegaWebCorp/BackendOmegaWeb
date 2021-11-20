@@ -1,0 +1,18 @@
+
+const database = 'MinTic4';
+//cambiar nombre de la colección para insertar mas registros
+const collection = 'Usuarios';
+
+const users = [
+  {
+    "correo": "tomas.anderson@mail.com",
+    "identificacion":"13236545",
+    "nombre": "Tomas",
+    "apellido": "Alba",  
+    "rol": "lider",
+    "estado": "no autorizado",
+    "password": "rwKeiWDba6tdKvDfEBjyePJnDT7K"
+  }
+  ]
+
+  db.getCollection(collection).insertMany(users);
