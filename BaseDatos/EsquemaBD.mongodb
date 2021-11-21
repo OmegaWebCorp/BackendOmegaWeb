@@ -300,22 +300,22 @@ const avances = [
   {
     "project_id": db.Proyectos.findOne({nombre: 'Project 2'})._id,
     "fecha": new Date(),
-    "description": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nisl augue, ultrices non placerat maximus, feugiat nec mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent posuere eros libero, eu hendrerit leo maximus congue. Aliquam accumsan tortor quis suscipit imperdiet. Pellentesque blandit augue lacus, at sollicitudin orci luctus sit amet. Donec et ornare leo. Fusce sollicitudin eros a nisi ullamcorper, porttitor eleifend massa luctus. Morbi luctus tellus dui, et commodo justo euismod eget.',
-    "observations": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "description": 'Se diseña un convertidor AC-AC Trifásico Controlado.',
+    "observations": 'Para la implementación de un convertidor AC-AC trifásico se basa en el diseño y análisis de un control por medio de TRIAC y optocopladores que permitan el recorte de la señal dependiendo la manipulación del control.',
     "creadopor": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'})._id
   },
   {
     "project_id": db.Proyectos.findOne({nombre: 'Project 2'})._id,
     "fecha": new Date(),
-    "description": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nisl augue, ultrices non placerat maximus, feugiat nec mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent posuere eros libero, eu hendrerit leo maximus congue. Aliquam accumsan tortor quis suscipit imperdiet. Pellentesque blandit augue lacus, at sollicitudin orci luctus sit amet. Donec et ornare leo. Fusce sollicitudin eros a nisi ullamcorper, porttitor eleifend massa luctus. Morbi luctus tellus dui, et commodo justo euismod eget.',
-    "observations": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "description": 'Se realiza un estudio de generación de energía por medios térmicos alternativos',
+    "observations": 'Implementar un sistema de producci´on de energıa t´ermica que permita la implementaci´on de agua para ser procesada, produciendo vapor de agua. Se implementa el diseño de un generador termoeléctrico por medio del ciclo de Rankine.',
     "creadopor": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'})._id
   },
   {
     "project_id": db.Proyectos.findOne({nombre: 'Project 1'})._id,
     "fecha": new Date(),
-    "description": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nisl augue, ultrices non placerat maximus, feugiat nec mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent posuere eros libero, eu hendrerit leo maximus congue. Aliquam accumsan tortor quis suscipit imperdiet. Pellentesque blandit augue lacus, at sollicitudin orci luctus sit amet. Donec et ornare leo. Fusce sollicitudin eros a nisi ullamcorper, porttitor eleifend massa luctus. Morbi luctus tellus dui, et commodo justo euismod eget.',
-    "observations": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "description": 'Se busca implementar un sistema de control discreto para un sistema de péndulo en una banda transportadora.',
+    "observations": 'Para la creación de controles digitales, es necesario platear tiempos de muestreo para un correcto funcionamiento. El objetivo de este proyecto es desarrollar habilidades en la simulación e implementación sistemas de control, así como conocer distintas estrategias para el dise ˜no de los controladores en tiempo discreto.',
     "creadopor": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'})._id
   }
 ];
