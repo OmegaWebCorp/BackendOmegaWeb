@@ -294,7 +294,7 @@ const avances = [
     "project_id": db.Proyectos.findOne({nombre: 'Project 1'})._id,
     "fecha": new Date(),
     "description": 'Se realizó el estudio bibliográfico del tipo de carbonatos usados en materiales compuestos y se diseñaron diversos',
-    "observations": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in dui et eros varius efficitur ut eget ex. Fusce faucibus dictum velit eget ultricies. Ut vitae efficitur ligula, nec interdum lacus. Phasellus id interdum neque. Fusce et velit id orci tempus maximus. Nam aliquam tincidunt tellus, eu condimentum sapien dictum sit amet. Aenean dictum volutpat facilisis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet orci non nisi pharetra fringilla.',
+    "observations": 'Realizar ensayos a nivel laboratorio que prueben la alta eficiencia de las zeolitas en la descomposición de alcoholes primarios.',
     "creadopor": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'})._id
   },
   {
@@ -308,14 +308,14 @@ const avances = [
     "project_id": db.Proyectos.findOne({nombre: 'Project 2'})._id,
     "fecha": new Date(),
     "description": 'Se realiza un estudio de generación de energía por medios térmicos alternativos',
-    "observations": 'Implementar un sistema de producci´on de energıa t´ermica que permita la implementaci´on de agua para ser procesada, produciendo vapor de agua. Se implementa el diseño de un generador termoeléctrico por medio del ciclo de Rankine.',
+    "observations": 'Implementar un sistema de producción de energıa térmica que permita la implementaci´on de agua para ser procesada, produciendo vapor de agua. Se implementa el diseño de un generador termoeléctrico por medio del ciclo de Rankine.',
     "creadopor": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'})._id
   },
   {
     "project_id": db.Proyectos.findOne({nombre: 'Project 1'})._id,
     "fecha": new Date(),
     "description": 'Se busca implementar un sistema de control discreto para un sistema de péndulo en una banda transportadora.',
-    "observations": 'Para la creación de controles digitales, es necesario platear tiempos de muestreo para un correcto funcionamiento. El objetivo de este proyecto es desarrollar habilidades en la simulación e implementación sistemas de control, así como conocer distintas estrategias para el dise ˜no de los controladores en tiempo discreto.',
+    "observations": 'Para la creación de controles digitales, es necesario platear tiempos de muestreo para un correcto funcionamiento. El objetivo de este proyecto es desarrollar habilidades en la simulación e implementación sistemas de control, así como conocer distintas estrategias para el diseño de los controladores en tiempo discreto.',
     "creadopor": db.Usuarios.findOne({correo: 'aldrin@omegaweb.com'})._id
   }
 ];

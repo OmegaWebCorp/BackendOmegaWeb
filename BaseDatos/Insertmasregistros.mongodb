@@ -12,7 +12,25 @@ const users = [
     "rol": "lider",
     "estado": "no autorizado",
     "password": "rwKeiWDba6tdKvDfEBjyePJnDT7K"
-  }
+  },
+  {
+    "correo": "ride@omegaweb.com",
+    "identificacion":"18061983",
+    "nombre": "Sally",
+    "apellido": "Ride",  
+    "rol": "estudiante",
+    "estado": "pendiente",
+    "password": "astronauta6"
+  },
+  {
+    "correo": "watkins@omegaweb.com",
+    "identificacion":"01042022",
+    "nombre": "Jessica",
+    "apellido": "Watkins",  
+    "rol": "estudiante",
+    "estado": "autorizado",
+    "password": "astronauta7"
+  },
   ]
 
   db.getCollection(collection).insertMany(users);
