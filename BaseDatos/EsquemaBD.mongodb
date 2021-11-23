@@ -103,6 +103,24 @@ const users = [
     "estado": "autorizado",
     "password": "astronauta5"
   },
+  {
+    "correo": "ride@omegaweb.com",
+    "identificacion":"18061983",
+    "nombre": "Sally",
+    "apellido": "Ride",  
+    "rol": "estudiante",
+    "estado": "pendiente",
+    "password": "astronauta6"
+  },
+  {
+    "correo": "watkins@omegaweb.com",
+    "identificacion":"01042022",
+    "nombre": "Jessica",
+    "apellido": "Watkins",  
+    "rol": "estudiante",
+    "estado": "autorizado",
+    "password": "astronauta7"
+  },
 ];
 
 // Insert users
