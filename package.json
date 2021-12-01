@@ -1,16 +1,17 @@
 {
-  "name": "BackendOmegaWeb",
+  "name": "backendomegaweb",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  
   "scripts": {
     "start": "ts-node index.ts"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "mongoose": "^6.0.13",
+    "@types/mongoose": "^5.11.97",
+    "mongoose": "^6.0.12",
+    "mongoose-type-email": "^1.1.2",
+    "mongoose-unique-validator": "^3.0.0",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.2"
+    "typescript": "^4.4.4"
   }
 }
