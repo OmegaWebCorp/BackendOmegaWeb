@@ -1,6 +1,7 @@
 import { UserModel } from './usuario.js';
-//import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import { InscriptionModel } from '../inscripcion/inscripcion.js';
+//import { usuario_sample } from "../../documents/usuario_sample";
 
 const resolversUsuario = {
   Usuario: {
@@ -23,6 +24,7 @@ const resolversUsuario = {
       return usuario;
     },
   },
+    
   Mutation: {
     crearUsuario: async (parent, args) => {
       const salt = await bcrypt.genSalt(10);
