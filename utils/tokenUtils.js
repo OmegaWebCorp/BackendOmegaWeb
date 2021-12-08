@@ -1,4 +1,3 @@
-/*
 import jwt from 'jsonwebtoken';
 
 const validateToken = (token) => {
@@ -27,4 +26,4 @@ const generateToken = (payload) => {
 };
 
 export { generateToken, validateToken };
-*/
+

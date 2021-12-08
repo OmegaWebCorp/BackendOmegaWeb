@@ -1,4 +1,3 @@
-/*
 import { gql } from 'apollo-server-express';
 
 const tiposAutenticacion = gql`
@@ -25,4 +24,4 @@ const tiposAutenticacion = gql`
 `;
 
 export { tiposAutenticacion };
-*/
+

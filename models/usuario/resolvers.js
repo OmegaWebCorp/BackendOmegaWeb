@@ -1,6 +1,7 @@
 import { UserModel } from './usuario.js';
-//import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import { InscriptionModel } from '../inscripcion/inscripcion.js';
+//import { usuario_sample } from "../../documents/usuario_sample";
 
 const resolversUsuario = {
   Usuario: {
@@ -19,17 +20,18 @@ const resolversUsuario = {
       return usuario;
     },
   },
+    
   Mutation: {
     crearUsuario: async (parent, args) => {
-      //const salt = await bcrypt.genSalt(10);
-      //const hashedPassword = await bcrypt.hash(args.password, salt);
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(args.password, salt);
       const usuarioCreado = await UserModel.create({
         nombre: args.nombre,
         apellido: args.apellido,
         identificacion: args.identificacion,
         correo: args.correo,
         rol: args.rol,
-        //password: hashedPassword,
+        password: hashedPassword,
       });
 
       if (Object.keys(args).includes('estado')) {
@@ -38,6 +40,7 @@ const resolversUsuario = {
 
       return usuarioCreado;
     },
+
     editarUsuario: async (parent, args) => {
       const usuarioEditado = await UserModel.findByIdAndUpdate(
         args._id,
