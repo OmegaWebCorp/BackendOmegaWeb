@@ -10,10 +10,14 @@ const resolversUsuario = {
     },
   },
   Query: {
+
     Usuarios: async (parent, args, context) => {
-      console.log(args);
-      const usuarios = await UserModel.find({ ...args.filtro });
-      return usuarios;
+      if ('userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR') {
+        const usuarios = await UserModel.find({ ...args.filtro });
+        return usuarios;
+      } else {
+        throw new Error("Operacion prohibida")
+      }
     },
     Usuario: async (parent, args) => {
       const usuario = await UserModel.findOne({ _id: args._id });
@@ -40,8 +44,11 @@ const resolversUsuario = {
 
       return usuarioCreado;
     },
-
-    editarUsuario: async (parent, args) => {
+    editarUsuario: async (parent, args, context) => {
+      const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
+      const esEstudianteOLider = 'userData' in context && 'rol' in context.userData && (context.userData.rol === 'LIDER' || context.userData.rol === 'ESTUDIANTE')
+      if (!esAdmin && !esEstudianteOLider) throw new Error('Operacion prohibida')
+      if (esEstudianteOLider && (args._id !== context.userData._id)) throw new Error('Operacion prohibida')
       const usuarioEditado = await UserModel.findByIdAndUpdate(
         args._id,
         {
