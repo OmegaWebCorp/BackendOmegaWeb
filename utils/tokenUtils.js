@@ -1,7 +1,7 @@
-/*
+
 import jwt from 'jsonwebtoken';
 
-const validateToken = (token) => {
+const   validateToken = (token) => {
   if (token) {
     const verification = jwt.verify(token, 'secret', (err, data) => {
       if (data) {
@@ -27,4 +27,4 @@ const generateToken = (payload) => {
 };
 
 export { generateToken, validateToken };
-*/
+

@@ -13,6 +13,8 @@ const resolversProyecto = {
   },
   Query: {
     Proyectos: async (parent, args, context) => {
+      const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
+      if (!esAdmin) throw new Error('Operacion prohibida')
       const proyectos = await ProjectModel.find();
       return proyectos;
     },
@@ -29,7 +31,9 @@ const resolversProyecto = {
       });
       return proyectoCreado;
     },
-    editarProyecto: async (parent, args) => {
+    editarProyecto: async (parent, args, context) => {
+      const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
+      if (!esAdmin) throw new Error('Operacion prohibida')
       const proyectoEditado = await ProjectModel.findByIdAndUpdate(
         args._id,
         { ...args.campos },

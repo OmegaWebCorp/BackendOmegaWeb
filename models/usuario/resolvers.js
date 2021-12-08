@@ -9,10 +9,14 @@ const resolversUsuario = {
     },
   },
   Query: {
+
     Usuarios: async (parent, args, context) => {
-      console.log(args);
-      const usuarios = await UserModel.find({ ...args.filtro });
-      return usuarios;
+      if ('userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR') {
+        const usuarios = await UserModel.find({ ...args.filtro });
+        return usuarios;
+      } else {
+        throw new Error("Operacion prohibida")
+      }
     },
     Usuario: async (parent, args) => {
       const usuario = await UserModel.findOne({ _id: args._id });
@@ -21,15 +25,15 @@ const resolversUsuario = {
   },
   Mutation: {
     crearUsuario: async (parent, args) => {
-      //const salt = await bcrypt.genSalt(10);
-      //const hashedPassword = await bcrypt.hash(args.password, salt);
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(args.password, salt);
       const usuarioCreado = await UserModel.create({
         nombre: args.nombre,
         apellido: args.apellido,
         identificacion: args.identificacion,
         correo: args.correo,
         rol: args.rol,
-        //password: hashedPassword,
+        password: hashedPassword,
       });
 
       if (Object.keys(args).includes('estado')) {
@@ -38,7 +42,11 @@ const resolversUsuario = {
 
       return usuarioCreado;
     },
-    editarUsuario: async (parent, args) => {
+    editarUsuario: async (parent, args, context) => {
+      const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
+      const esEstudianteOLider = 'userData' in context && 'rol' in context.userData && (context.userData.rol === 'LIDER' || context.userData.rol === 'ESTUDIANTE')
+      if (!esAdmin && !esEstudianteOLider) throw new Error('Operacion prohibida')
+      if (esEstudianteOLider && (args._id !== context.userData._id)) throw new Error('Operacion prohibida')
       const usuarioEditado = await UserModel.findByIdAndUpdate(
         args._id,
         {
