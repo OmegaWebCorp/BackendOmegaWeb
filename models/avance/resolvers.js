@@ -23,6 +23,15 @@ const resolversAvance = {
       });
       return avanceCreado;
     },
+    crearObservacionAvance: async (parents, args) => {
+      const avanceActualizado = ModeloAvance.findByIdAndUpdate(
+        args._id,
+        {
+          observaciones: args.observaciones
+        }
+      );
+      return avanceActualizado;
+    },
   },
 };
 
