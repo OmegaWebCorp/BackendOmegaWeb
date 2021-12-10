@@ -13,11 +13,19 @@ const resolversProyecto = {
   },
   Query: {
     Proyectos: async (parent, args, context) => {
-      const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
-      if (!esAdmin) throw new Error('Operacion prohibida')
-      const proyectos = await ProjectModel.find();
+     // const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
+      //if (!esAdmin) throw new Error('Operacion prohibida')
+      const proyectos = await ProjectModel.find().populate('avances');
       return proyectos;
     },
+    Proyecto: async (parent, args, context) => {
+      // const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
+       //if (!esAdmin) throw new Error('Operacion prohibida')
+       const proyectos = await ProjectModel.findOne( { _id: args._id }).populate('avances');
+       return proyectos;
+
+      
+     }
   },
   Mutation: {
     crearProyecto: async (parent, args, context) => {
