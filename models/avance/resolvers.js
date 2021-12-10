@@ -23,6 +23,29 @@ const resolversAvance = {
       });
       return avanceCreado;
     },
+    crearObservacionAvance: async (parents, args) => {
+        const avanceActualizado = ModeloAvance.findByIdAndUpdate(
+        args._id,
+        {
+          $push: {observaciones: args.observaciones}
+        }
+      );
+      return avanceActualizado;
+    },
+    editarAvance: async (parent, args) => {
+      const avanceEditado = await ModeloAvance.findByIdAndUpdate(
+        args._id,
+        {
+        fecha: args.fecha,
+        descripcion: args.descripcion,
+        proyecto: args.proyecto,
+        creadoPor: args.creadoPor,
+        },
+        { new: true }
+      );
+  
+  return avanceEditado;
+    }
   },
 };
 
