@@ -15,7 +15,7 @@ const resolversProyecto = {
     Proyectos: async (parent, args, context) => {
       const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
       if (!esAdmin) throw new Error('Operacion prohibida')
-      const proyectos = await ProjectModel.find();
+      const proyectos = await ProjectModel.find().populate('avances');
       return proyectos;
     },
   },

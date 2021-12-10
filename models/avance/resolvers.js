@@ -24,10 +24,10 @@ const resolversAvance = {
       return avanceCreado;
     },
     crearObservacionAvance: async (parents, args) => {
-      const avanceActualizado = ModeloAvance.findByIdAndUpdate(
+        const avanceActualizado = ModeloAvance.findByIdAndUpdate(
         args._id,
         {
-          observaciones: args.observaciones
+          $push: {observaciones: args.observaciones}
         }
       );
       return avanceActualizado;
