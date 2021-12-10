@@ -1,5 +1,6 @@
 {
   "name": "backend-omegaweb",
+
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -24,3 +25,4 @@
     "nodemon": "^2.0.15"
   }
 }
+
