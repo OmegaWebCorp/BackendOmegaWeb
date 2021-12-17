@@ -1,6 +1,8 @@
 import { InscriptionModel } from '../inscripcion/inscripcion.js';
 import { UserModel } from '../usuario/usuario.js';
 import { ProjectModel } from './proyecto.js';
+import { isAuthorized, isAuthorizedAdminLeader } from '../../utils/authorization.js';
+import { filterProjectsByRole } from './filters.js';
 
 const resolversProyecto = {
   Proyecto: {
@@ -13,19 +15,18 @@ const resolversProyecto = {
   },
   Query: {
     Proyectos: async (parent, args, context) => {
-     // const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
-      //if (!esAdmin) throw new Error('Operacion prohibida')
-      const proyectos = await ProjectModel.find().populate('avances');
-      return proyectos;
+      const { userData } = context
+      isAuthorized(context)
+      let proyectos = await ProjectModel.find().populate('avances');
+      proyectos = filterProjectsByRole(proyectos, userData.rol, userData._id);
+      return proyectos
     },
     Proyecto: async (parent, args, context) => {
-      // const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
-       //if (!esAdmin) throw new Error('Operacion prohibida')
-       const proyectos = await ProjectModel.findOne( { _id: args._id }).populate('avances');
-       return proyectos;
+      const proyectos = await ProjectModel.findOne({ _id: args._id }).populate('avances');
+      return proyectos;
 
-      
-     }
+
+    }
   },
   Mutation: {
     crearProyecto: async (parent, args, context) => {
@@ -40,8 +41,7 @@ const resolversProyecto = {
       return proyectoCreado;
     },
     editarProyecto: async (parent, args, context) => {
-      const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
-      if (!esAdmin) throw new Error('Operacion prohibida')
+      isAuthorizedAdminLeader(context)
       const proyectoEditado = await ProjectModel.findByIdAndUpdate(
         args._id,
         { ...args.campos },
