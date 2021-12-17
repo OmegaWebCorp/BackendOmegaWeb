@@ -11,5 +11,5 @@ const filterProjectsByRole = (proyects, role, userId) => {
     }
 }
 
-export default { filterProjectsByRole }
+export { filterProjectsByRole }
 

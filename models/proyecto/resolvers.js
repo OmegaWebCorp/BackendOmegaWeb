@@ -2,7 +2,7 @@ import { InscriptionModel } from '../inscripcion/inscripcion.js';
 import { UserModel } from '../usuario/usuario.js';
 import { ProjectModel } from './proyecto.js';
 import { isAuthorized, isAuthorizedAdminLeader } from '../../utils/authorization.js';
-import { filterProjectsByRole } from './filters.js';
+import {filterProjectsByRole} from './filters.js'
 
 const resolversProyecto = {
   Proyecto: {
