@@ -2,7 +2,7 @@ import { UserModel } from './usuario.js';
 import bcrypt from 'bcrypt';
 import { InscriptionModel } from '../inscripcion/inscripcion.js';
 import { filterUsersByRole } from './filters.js'
-import { isAuthorized } from '../../utils/authorization.js';
+import { isAuthorized, isAuthorizedAdminLeader } from '../../utils/authorization.js';
 //import { usuario_sample } from "../../documents/usuario_sample";
 
 const resolversUsuario = {
@@ -47,10 +47,7 @@ const resolversUsuario = {
       return usuarioCreado;
     },
     editarUsuario: async (parent, args, context) => {
-      const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
-      const esEstudianteOLider = 'userData' in context && 'rol' in context.userData && (context.userData.rol === 'LIDER' || context.userData.rol === 'ESTUDIANTE')
-      if (!esAdmin && !esEstudianteOLider) throw new Error('Operacion prohibida')
-      if (esEstudianteOLider && (args._id !== context.userData._id)) throw new Error('Operacion prohibida')
+      isAuthorizedAdminLeader(context)
       const usuarioEditado = await UserModel.findByIdAndUpdate(
         args._id,
         {
