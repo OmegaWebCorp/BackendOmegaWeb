@@ -26,7 +26,7 @@ const resolversUsuario = {
       return usuario;
     },
   },
-    
+
   Mutation: {
     crearUsuario: async (parent, args) => {
       const salt = await bcrypt.genSalt(10);
@@ -71,6 +71,18 @@ const resolversUsuario = {
         return usuarioEliminado;
       }
     },
+    editarPerfil: async (parent, args, context) => {
+      const { userData } = context
+      isAuthorized(context)
+      if (userData._id !== args._id) throw new Error('Operacion prohibida')
+      const usuarioEditado = await UserModel.findByIdAndUpdate(
+        args._id,
+        { ...args.campos },
+        { new: true }
+      );
+
+      return usuarioEditado;
+    }
   },
 };
 
