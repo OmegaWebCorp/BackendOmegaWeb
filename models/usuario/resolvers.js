@@ -1,6 +1,8 @@
 import { UserModel } from './usuario.js';
 import bcrypt from 'bcrypt';
 import { InscriptionModel } from '../inscripcion/inscripcion.js';
+import { filterUsersByRole } from './filters.js'
+import { isAuthorized, isAuthorizedAdminLeader } from '../../utils/authorization.js';
 //import { usuario_sample } from "../../documents/usuario_sample";
 
 const resolversUsuario = {
@@ -12,19 +14,19 @@ const resolversUsuario = {
   Query: {
 
     Usuarios: async (parent, args, context) => {
-      if ('userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR') {
-        const usuarios = await UserModel.find({ ...args.filtro });
-        return usuarios;
-      } else {
-        throw new Error("Operacion prohibida")
-      }
+      const { userData } = context
+      isAuthorized(context)
+      let usuarios = await UserModel.find({ ...args.filtro });
+      usuarios = filterUsersByRole(usuarios, userData.rol)
+      return usuarios;
+
     },
     Usuario: async (parent, args) => {
       const usuario = await UserModel.findOne({ _id: args._id });
       return usuario;
     },
   },
-    
+
   Mutation: {
     crearUsuario: async (parent, args) => {
       const salt = await bcrypt.genSalt(10);
@@ -45,10 +47,7 @@ const resolversUsuario = {
       return usuarioCreado;
     },
     editarUsuario: async (parent, args, context) => {
-      const esAdmin = 'userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR'
-      const esEstudianteOLider = 'userData' in context && 'rol' in context.userData && (context.userData.rol === 'LIDER' || context.userData.rol === 'ESTUDIANTE')
-      if (!esAdmin && !esEstudianteOLider) throw new Error('Operacion prohibida')
-      if (esEstudianteOLider && (args._id !== context.userData._id)) throw new Error('Operacion prohibida')
+      isAuthorizedAdminLeader(context)
       const usuarioEditado = await UserModel.findByIdAndUpdate(
         args._id,
         {
@@ -72,6 +71,18 @@ const resolversUsuario = {
         return usuarioEliminado;
       }
     },
+    editarPerfil: async (parent, args, context) => {
+      const { userData } = context
+      isAuthorized(context)
+      if (userData._id !== args._id) throw new Error('Operacion prohibida')
+      const usuarioEditado = await UserModel.findByIdAndUpdate(
+        args._id,
+        { ...args.campos },
+        { new: true }
+      );
+
+      return usuarioEditado;
+    }
   },
 };
 
