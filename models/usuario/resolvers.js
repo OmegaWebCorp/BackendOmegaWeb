@@ -1,6 +1,8 @@
 import { UserModel } from './usuario.js';
 import bcrypt from 'bcrypt';
 import { InscriptionModel } from '../inscripcion/inscripcion.js';
+import { filterUsersByRole } from './filters.js'
+import { isAuthorized } from '../../utils/authorization.js';
 //import { usuario_sample } from "../../documents/usuario_sample";
 
 const resolversUsuario = {
@@ -12,12 +14,12 @@ const resolversUsuario = {
   Query: {
 
     Usuarios: async (parent, args, context) => {
-      if ('userData' in context && 'rol' in context.userData && context.userData.rol === 'ADMINISTRADOR') {
-        const usuarios = await UserModel.find({ ...args.filtro });
-        return usuarios;
-      } else {
-        throw new Error("Operacion prohibida")
-      }
+      const { userData } = context
+      isAuthorized(context)
+      let usuarios = await UserModel.find({ ...args.filtro });
+      usuarios = filterUsersByRole(usuarios, userData.rol)
+      return usuarios;
+
     },
     Usuario: async (parent, args) => {
       const usuario = await UserModel.findOne({ _id: args._id });
