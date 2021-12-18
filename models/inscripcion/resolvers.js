@@ -20,7 +20,7 @@ const resolverInscripciones = {
   Mutation: {
     crearInscripcion: async (parent, args) => {
       const inscripcionCreada = await InscriptionModel.create({
-        estado: args.estado,
+        estado: 'PENDIENTE',
         proyecto: args.proyecto,
         estudiante: args.estudiante,
       });
@@ -31,6 +31,17 @@ const resolverInscripciones = {
         args.id,
         {
           estado: 'ACEPTADO',
+          fechaIngreso: Date.now(),
+        },
+        { new: true }
+      );
+      return inscripcionAprobada;
+    },
+    rechazarInscripcion: async (parent, args) => {
+      const inscripcionAprobada = await InscriptionModel.findByIdAndUpdate(
+        args.id,
+        {
+          estado: 'RECHAZADO',
           fechaIngreso: Date.now(),
         },
         { new: true }
