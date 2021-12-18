@@ -17,7 +17,7 @@ const resolversProyecto = {
     Proyectos: async (parent, args, context) => {
       const { userData } = context
       isAuthorized(context)
-      let proyectos = await ProjectModel.find().populate('avances');
+      let proyectos = await ProjectModel.find().populate('avances').populate('inscripciones');
       proyectos = filterProjectsByRole(proyectos, userData.rol, userData._id);
       return proyectos
     },
