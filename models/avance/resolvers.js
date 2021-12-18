@@ -1,10 +1,11 @@
 import { ModeloAvance } from './avance.js';
+import { filterAvancesByProject } from './filters.js';
 
 const resolversAvance = {
   Query: {
     Avances: async (parent, args) => {
       const avances = await ModeloAvance.find().populate('proyecto').populate('creadoPor');
-      return avances;
+      return filterAvancesByProject(args.project, avances);
     },
     filtrarAvance: async (parents, args) => {
       const avanceFiltrado = await ModeloAvance.find({ proyecto: args._id })
@@ -24,10 +25,10 @@ const resolversAvance = {
       return avanceCreado;
     },
     crearObservacionAvance: async (parents, args) => {
-        const avanceActualizado = ModeloAvance.findByIdAndUpdate(
+      const avanceActualizado = ModeloAvance.findByIdAndUpdate(
         args._id,
         {
-          $push: {observaciones: args.observaciones}
+          $push: { observaciones: args.observaciones }
         }
       );
       return avanceActualizado;
@@ -36,15 +37,15 @@ const resolversAvance = {
       const avanceEditado = await ModeloAvance.findByIdAndUpdate(
         args._id,
         {
-        fecha: args.fecha,
-        descripcion: args.descripcion,
-        proyecto: args.proyecto,
-        creadoPor: args.creadoPor,
+          fecha: args.fecha,
+          descripcion: args.descripcion,
+          proyecto: args.proyecto,
+          creadoPor: args.creadoPor,
         },
         { new: true }
       );
-  
-  return avanceEditado;
+
+      return avanceEditado;
     }
   },
 };
